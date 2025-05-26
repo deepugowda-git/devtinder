@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "name": "dev_tinder_project",
+  "version": "1.0.0",
+  "description": "node js and javascript",
+  "main": "index.js",
+  "type":"commonjs",
+  "scripts": {
+    "start":"node src/app.js",
+    "dev":"nodemon src/app.js"
+  },
+  "author": "Deepthihanumantharayappa",
+  "license": "ISC"
+}
