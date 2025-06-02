@@ -2,32 +2,22 @@ const express=require('express');
 
 const app=express();
 
-// This will handle only get call to /user
-app.get('/user',(req,res)=>{
-res.send({firstName:'deepthi',lastName:'H'})
+const {adminAuth,userAuth} = require( './middleware/auth')
+
+app.use('/admin',adminAuth);
+app.use('/user',userAuth)
+
+app.get("/admin/getAllData",(req,res)=>{
+    res.send("all the data send")
+})
+app.get("/admin/deleteAllUser",(req,res)=>{
+    res.send("deleted all the user")
 })
 
- 
-app.post('/user',(req,res)=>{
-     console.log('The maruthi data successfully sended');
-     
-    res.send('i can able to fetch the data successfully')
+app.get("/user/getAllData",(req,res)=>{
+    res.send("send all user data")
 })
-
-// IF we use it will match all the http method api calls to /test
-app.use("/hello",(req,res)=>{
-    res.send('How are You hemanth!  Hope you are Doing GOOD');
-    
-})
-
-
-app.use("/user",(req,res)=>{
-    res.send("Hello,Hemanth!")
- })
-
-
-
 app.listen(8008,()=>{
-    console.log("The server is successfully listening on the port 8008...");
+    console.log("The server is successfully listening on the port 8008....");
     
 })

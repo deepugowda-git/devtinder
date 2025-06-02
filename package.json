@@ -8,8 +8,8 @@
   "main": "index.js",
   "type":"commonjs",
   "scripts": {
-    "start":"node src/app.js",
-    "dev":"nodemon src/app.js"
+    "start":"node src/app.js/middleware/auth.js",
+    "dev":"nodemon src/app.js//middleware/auth.js"
   },
   "author": "Deepthihanumantharayappa",
   "license": "ISC"
