@@ -1,23 +1,39 @@
 const express=require('express');
-
+const connectDB=require('./config/database')
 const app=express();
+const User=require("./models/user")
 
-const {adminAuth,userAuth} = require( './middleware/auth')
-
-app.use('/admin',adminAuth);
-app.use('/user',userAuth)
-
-app.get("/admin/getAllData",(req,res)=>{
-    res.send("all the data send")
+app.post("/signup",async(req,res)=>{
+    const user= new User ({
+        firstName:"maruthi",
+        lastName:"N",
+        emailId:"maruthigowda@gmail.com",
+        password:"maruthi@123"
+    });
+try{
+    await user.save();
+    res.send("user data added successfully....")
+}catch(err){
+     res.status(400).send("error saving the data:"+ err.message)
+}
+    
 })
-app.get("/admin/deleteAllUser",(req,res)=>{
-    res.send("deleted all the user")
-})
 
-app.get("/user/getAllData",(req,res)=>{
-    res.send("send all user data")
-})
+
+
+
+
+
+
+connectDB()
+.then(()=>{
+console.log("Database connection established....");
 app.listen(8008,()=>{
     console.log("The server is successfully listening on the port 8008....");
     
+})
+})
+.catch(()=>{
+console.log("Database connot be connected");
+
 })
