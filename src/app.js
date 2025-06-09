@@ -32,6 +32,8 @@ if(users.length===0){
     res.status(400).send("somthing went wrong")
 }
 })
+
+
 //feed api- get/feed-get all the users from the database 
 app.get("/feed",async(req,res)=>{
     try{
@@ -40,7 +42,53 @@ app.get("/feed",async(req,res)=>{
     }catch(err){
          res.status(400).send("somthing went wrong")
     }
+});
+
+//delete userId
+
+app.delete("/user",async(req,res)=>{
+    const userId=req.body.userId;
+    try{
+        const user=await User.findByIdAndDelete(userId);
+        res.send("User deleted successfully")
+    }catch(err){
+         res.status(400).send("somthing went wrong")
+    }
 })
+
+//update data of the user
+app.patch("/user/:userId",async(req,res)=>{
+    const userId=req.params?.userId;
+    const data=req.body;
+    try{
+        const ALLOWED_UPDATES=["photoUrl","about","gender","age","skills"];
+
+        const isUpdateAllowed=Object.keys(data).every((k)=>ALLOWED_UPDATES.includes(k));
+        if(!isUpdateAllowed){
+            throw new Error("update is not allowed")
+        }
+
+        if(data?.skills.length>10){
+            throw new Error("skills canot be more than 10");
+            
+        }
+        
+       const user =await User.findByIdAndUpdate({_id:userId},data, {
+            returnDocument:'before',
+            runValidators:true,
+        });
+        console.log(user);
+        
+       //console.log(user);
+       
+        res.send("user updated successfully")
+
+    }catch(err){
+         res.status(400).send("update failed:"+ err.message)
+    }
+})
+
+
 
 
 connectDB()
