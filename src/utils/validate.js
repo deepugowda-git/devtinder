@@ -3,8 +3,6 @@ const validator=require('validator')
 
 const validateSignUp=(req)=>{
     const {firstName,lastName,emailId,password}=req.body;
-
-
     if(!firstName || ! lastName){
         throw new Error("name is not valid!");    
     }
